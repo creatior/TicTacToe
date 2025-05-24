@@ -1,4 +1,7 @@
-namespace TicTacToe4
+using Microsoft.EntityFrameworkCore;
+using TicTacToe.DataAccess;
+
+namespace TicTacToe
 {
     public class Program
     {
@@ -12,6 +15,12 @@ namespace TicTacToe4
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddDbContext<TicTacToeDbContext>(
+                options =>
+                {
+                    options.UseNpgsql(builder.Configuration.GetConnectionString(nameof(TicTacToeDbContext)));
+                });
 
             var app = builder.Build();
 
