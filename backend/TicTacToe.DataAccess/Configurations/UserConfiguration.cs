@@ -17,9 +17,6 @@ namespace TicTacToe.DataAccess.Configurations
 
             builder.Property(x => x.Password)
                 .IsRequired();
-
-            builder.Property(x => x.Email)
-                .IsRequired();
         }
     }
 }

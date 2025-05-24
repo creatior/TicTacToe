@@ -21,8 +21,7 @@ namespace TicTacToe.API.Controllers
             var (user, error) = Core.Models.User.Create(
                 Guid.NewGuid(),
                 request.Username,
-                request.Password,
-                request.Email);
+                request.Password);
 
             if (!string.IsNullOrEmpty(error))
             {

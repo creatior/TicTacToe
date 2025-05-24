@@ -2,6 +2,6 @@
 {
     public record UsersRequest(
         string Username,
-        string Password,
-        string Email);
+        string Password
+        );
 }

@@ -3,7 +3,6 @@
     public record UsersResponse(
         Guid Id,
         string Username,
-        string Password,
-        string Email
+        string Password
         );
 }

@@ -17,7 +17,6 @@ namespace TicTacToe.DataAccess.Repositories
             {
                 Id = user.Id,
                 Username = user.Username,
-                Email = user.Email,
                 Password = user.Password,
             };
 
