@@ -4,10 +4,10 @@ using TicTacToe.DataAccess.Entities;
 
 namespace TicTacToe.DataAccess.Repositories
 {
-    public class UserRepository
+    public class UsersRepository
     {
         private readonly TicTacToeDbContext _context;
-        public UserRepository(TicTacToeDbContext context)
+        public UsersRepository(TicTacToeDbContext context)
         {
             _context = context;
         }
