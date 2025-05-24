@@ -1,28 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TicTacToe.Core.Models;
+﻿using TicTacToe.Core.Models;
 using TicTacToe.DataAccess.Entities;
 
 namespace TicTacToe.DataAccess.Repositories
 {
-    public class UsersRepository
+    public class UsersRepository : IUsersRepository
     {
         private readonly TicTacToeDbContext _context;
         public UsersRepository(TicTacToeDbContext context)
         {
             _context = context;
-        }
-
-        public async Task<List<User>> Get()
-        {
-            var userEntities = await _context.Users
-                .AsNoTracking()
-                .ToListAsync();
-
-            var users = userEntities
-                .Select(x => User.Create(x.Id, x.Username, x.Password, x.Email).User)
-                .ToList();
-
-            return users;
         }
 
         public async Task<Guid> Create(User user)

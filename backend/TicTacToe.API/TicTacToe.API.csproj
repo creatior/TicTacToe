@@ -15,10 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\TicTacToe.Application\TicTacToe.Application.csproj" />
     <ProjectReference Include="..\TicTacToe.DataAccess\TicTacToe.DataAccess.csproj" />
   </ItemGroup>
 

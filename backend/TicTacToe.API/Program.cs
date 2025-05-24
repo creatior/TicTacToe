@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using TicTacToe.Application.Services;
 using TicTacToe.DataAccess;
+using TicTacToe.DataAccess.Repositories;
 
 namespace TicTacToe
 {
@@ -21,6 +23,9 @@ namespace TicTacToe
                 {
                     options.UseNpgsql(builder.Configuration.GetConnectionString(nameof(TicTacToeDbContext)));
                 });
+
+            builder.Services.AddScoped<IUsersService, UsersService>();
+            builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 
             var app = builder.Build();
 

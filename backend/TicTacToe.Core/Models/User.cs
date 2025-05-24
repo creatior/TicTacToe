@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace TicTacToe.Core.Models
+﻿namespace TicTacToe.Core.Models
 {
     public class User
     {
