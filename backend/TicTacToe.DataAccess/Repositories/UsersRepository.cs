@@ -10,7 +10,6 @@ namespace TicTacToe.DataAccess.Repositories
         {
             _context = context;
         }
-
         public async Task<Guid> Create(User user)
         {
             var userEntity = new UserEntity

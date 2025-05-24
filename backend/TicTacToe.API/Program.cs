@@ -27,6 +27,9 @@ namespace TicTacToe
             builder.Services.AddScoped<IUsersService, UsersService>();
             builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 
+            builder.Services.AddScoped<IGameStatesService, GameStatesService>();
+            builder.Services.AddScoped<IGameStatesRepository, GameStatesRepository>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
