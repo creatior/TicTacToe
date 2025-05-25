@@ -15,7 +15,7 @@ namespace TicTacToe.API.Controllers
             this._usersService = usersService;
         }
 
-        [HttpPost]
+        [HttpPost("register")]
         public async Task<ActionResult<Guid>> CreateUser([FromBody] UsersRequest request)
         {
             var (user, error) = Core.Models.User.Create(
@@ -29,6 +29,29 @@ namespace TicTacToe.API.Controllers
             }
 
             var userId = await _usersService.CreateUser(user);
+
+            return Ok(userId);
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<Guid>> Login([FromBody] LoginRequest request)
+        {
+            if (string.IsNullOrEmpty(request.Username))
+            {
+                return BadRequest("Username is required");
+            }
+
+            if (string.IsNullOrEmpty(request.Password))
+            {
+                return BadRequest("Password is required");
+            }
+
+            var userId = await _usersService.Authenticate(request.Username, request.Password);
+
+            if (userId == null)
+            {
+                return Unauthorized("Invalid username or password");
+            }
 
             return Ok(userId);
         }
