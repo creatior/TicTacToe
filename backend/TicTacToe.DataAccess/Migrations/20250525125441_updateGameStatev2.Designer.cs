@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TicTacToe.DataAccess;
@@ -11,9 +12,11 @@ using TicTacToe.DataAccess;
 namespace TicTacToe.DataAccess.Migrations
 {
     [DbContext(typeof(TicTacToeDbContext))]
-    partial class TicTacToeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250525125441_updateGameStatev2")]
+    partial class updateGameStatev2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,14 +25,11 @@ namespace TicTacToe.DataAccess.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("TicTacToe.DataAccess.Entities.GameEntity", b =>
+            modelBuilder.Entity("TicTacToe.DataAccess.Entities.GameStateEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<long>("Difficulty")
                         .HasColumnType("bigint");
@@ -45,7 +45,7 @@ namespace TicTacToe.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Games");
+                    b.ToTable("GameStates");
                 });
 
             modelBuilder.Entity("TicTacToe.DataAccess.Entities.UserEntity", b =>
@@ -67,7 +67,7 @@ namespace TicTacToe.DataAccess.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TicTacToe.DataAccess.Entities.GameEntity", b =>
+            modelBuilder.Entity("TicTacToe.DataAccess.Entities.GameStateEntity", b =>
                 {
                     b.HasOne("TicTacToe.DataAccess.Entities.UserEntity", "User")
                         .WithMany()

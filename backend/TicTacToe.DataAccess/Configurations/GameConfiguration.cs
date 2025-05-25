@@ -4,9 +4,9 @@ using TicTacToe.DataAccess.Entities;
 
 namespace TicTacToe.DataAccess.Configurations
 {
-    public class GameStateConfiguration : IEntityTypeConfiguration<GameStateEntity>
+    public class GameConfiguration : IEntityTypeConfiguration<GameEntity>
     {
-        public void Configure(EntityTypeBuilder<GameStateEntity> builder)
+        public void Configure(EntityTypeBuilder<GameEntity> builder)
         {
             builder.HasKey(x => x.Id);
 

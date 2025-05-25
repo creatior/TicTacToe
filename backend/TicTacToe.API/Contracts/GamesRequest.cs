@@ -1,9 +1,10 @@
 ﻿namespace TicTacToe.API.Contracts
 {
-    public record GameStatesRequest(
+    public record GamesRequest(
         string State,
         uint Difficulty,
         bool Finished,
-        Guid UserId
+        Guid UserId,
+        uint Result
         );
 }

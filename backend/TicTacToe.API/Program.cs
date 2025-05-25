@@ -25,8 +25,8 @@ namespace TicTacToe
             builder.Services.AddScoped<IUsersService, UsersService>();
             builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 
-            builder.Services.AddScoped<IGameStatesService, GameStatesService>();
-            builder.Services.AddScoped<IGameStatesRepository, GameStatesRepository>();
+            builder.Services.AddScoped<IGamesService, GamesService>();
+            builder.Services.AddScoped<IGamesRepository, GamesRepository>();
 
             var app = builder.Build();
 

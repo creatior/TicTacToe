@@ -1,25 +1,28 @@
 ﻿namespace TicTacToe.Core.Models
 {
-    public class GameState
+    public class Game
     {
-        public GameState(Guid id, string state, DateTime date, uint difficulty, bool finished, Guid userId)
+        public Game(Guid id, string state, DateTime date, uint difficulty, Guid userId)
         {
             Id = id;
             State = state;
             Date = date;
             Difficulty = difficulty;
-            Finished = finished;
             UserId = userId;
+            Finished = false;
+            Result = 0;
+            
         }
 
         public Guid Id { get; }
         public string State { get; } = string.Empty;
         public DateTime Date { get; }
         public uint Difficulty { get; }
-        public bool Finished { get; }
         public Guid UserId { get; }
+        public bool Finished { get; }
+        public uint Result { get; }
 
-        public static (GameState GameState, string error) Create(Guid Id, string State, DateTime Date, uint Difficulty, bool Finished, Guid UserId)
+        public static (Game Game, string error) Create(Guid Id, string State, uint Difficulty, Guid UserId)
         {
             var error = string.Empty;
 
@@ -32,11 +35,11 @@
                 error = "Incorrect difficulty";
             }
 
-            var utcDate = Date.Kind == DateTimeKind.Local ? Date.ToUniversalTime() : Date;
+            var curTime = DateTime.UtcNow;
 
-            var gameState = new GameState(Id, State, utcDate, Difficulty, Finished, UserId);
+            var game = new Game(Id, State, curTime, Difficulty, UserId);
 
-            return (gameState, error);
+            return (game, error);
         }
     }
 }

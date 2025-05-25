@@ -11,11 +11,11 @@ namespace TicTacToe.DataAccess
         }
 
         public DbSet<UserEntity> Users { get; set; }
-        public DbSet<GameStateEntity> GameStates {  get; set; }
+        public DbSet<GameEntity> Games {  get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<GameStateEntity>()
+            modelBuilder.Entity<GameEntity>()
                 .HasOne(g => g.User)
                 .WithMany()
                 .HasForeignKey(g => g.UserId)
