@@ -35,6 +35,25 @@ namespace TicTacToe.API.Controllers
             return Ok(gameStateId);
         }
 
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<GamesResponse>> GetGame(Guid id)
+        {
+            var game = await _gameService.GetGame(id);
+
+            if (game == null)
+            {
+                return NotFound();
+            }
+
+            var response = new GamesResponse(
+                Id: game.Id,
+                State: game.State,
+                Difficulty: game.Difficulty
+            );
+
+            return Ok(response);
+        }
+
         [HttpPatch("{id:guid}")]
         public async Task<ActionResult<Guid>> UpdateGame(Guid id, [FromBody] GamesRequest request)
         {

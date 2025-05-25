@@ -3,6 +3,6 @@
     public record GamesResponse(
         Guid Id,
         string State,
-        uint Difficulty
+        uint? Difficulty
         );
 }

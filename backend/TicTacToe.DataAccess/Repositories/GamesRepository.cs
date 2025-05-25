@@ -30,6 +30,24 @@ namespace TicTacToe.DataAccess.Repositories
             return gameEntity.Id;
         }
 
+        public async Task<Game?> Get(Guid id)
+        {
+            var gameEntity = await _context.Games
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            if (gameEntity == null)
+            {
+                return null;
+            }
+
+            var (game, error) = Game.Create(gameEntity.Id, gameEntity.State, gameEntity.Difficulty, gameEntity.UserId);
+            if (!string.IsNullOrEmpty(error))
+            {
+                return null;
+            }
+            return game;
+        }
         public async Task<Guid?> Update(Guid id, string? State, uint? Difficulty, bool? Finished, Guid? UserId, uint? Result)
         {
             await _context.Games

@@ -17,6 +17,11 @@ namespace TicTacToe.Application.Services
             return await _gameRepository.Create(game);
         }
 
+        public async Task<Game> GetGame(Guid id)
+        {
+            return await _gameRepository.Get(id);
+        }
+
         public async Task<Guid?> UpdateGame(Guid id, string? State, uint? Difficulty, bool? Finished, Guid? UserId, uint? Result)
         {
             return await _gameRepository.Update(id, State, Difficulty, Finished, UserId, Result);
