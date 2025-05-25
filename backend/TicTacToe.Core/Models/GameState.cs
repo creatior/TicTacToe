@@ -2,13 +2,14 @@
 {
     public class GameState
     {
-        public GameState(Guid id, string state, DateTime date, uint difficulty, bool finished)
+        public GameState(Guid id, string state, DateTime date, uint difficulty, bool finished, Guid userId)
         {
             Id = id;
             State = state;
             Date = date;
             Difficulty = difficulty;
             Finished = finished;
+            UserId = userId;
         }
 
         public Guid Id { get; }
@@ -16,8 +17,9 @@
         public DateTime Date { get; }
         public uint Difficulty { get; }
         public bool Finished { get; }
-        
-        public static (GameState GameState, string error) Create(Guid Id, string State, DateTime Date, uint difficulty, bool Finished)
+        public Guid UserId { get; }
+
+        public static (GameState GameState, string error) Create(Guid Id, string State, DateTime Date, uint Difficulty, bool Finished, Guid UserId)
         {
             var error = string.Empty;
 
@@ -25,12 +27,14 @@
             {
                 error = "Field size must be 16 cells";
             }
-            if (difficulty > 4)
+            if (Difficulty > 4)
             {
                 error = "Incorrect difficulty";
             }
 
-            var gameState = new GameState(Id, State, Date, difficulty, Finished);
+            var utcDate = Date.Kind == DateTimeKind.Local ? Date.ToUniversalTime() : Date;
+
+            var gameState = new GameState(Id, State, utcDate, Difficulty, Finished, UserId);
 
             return (gameState, error);
         }

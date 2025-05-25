@@ -24,7 +24,8 @@ namespace TicTacToe.API.Controllers
                 request.State,
                 DateTime.Now,
                 request.Difficulty,
-                request.Finished);
+                request.Finished,
+                request.UserId);
 
             if (!string.IsNullOrEmpty(error))
             {

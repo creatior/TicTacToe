@@ -17,9 +17,10 @@ namespace TicTacToe.DataAccess.Repositories
             {
                 Id = gameState.Id,
                 State = gameState.State,
-                Date = DateTime.Now,
+                Date = DateTime.UtcNow,
                 Difficulty = gameState.Difficulty,
-                Finished = gameState.Finished
+                Finished = gameState.Finished,
+                UserId = gameState.UserId,
             };
 
             await _context.GameStates.AddAsync(gameStateEntity);

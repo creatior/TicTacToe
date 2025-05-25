@@ -3,6 +3,7 @@
     public record GameStatesRequest(
         string State,
         uint Difficulty,
-        bool Finished
+        bool Finished,
+        Guid UserId
         );
 }

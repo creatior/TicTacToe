@@ -12,5 +12,14 @@ namespace TicTacToe.DataAccess
 
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<GameStateEntity> GameStates {  get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<GameStateEntity>()
+                .HasOne(g => g.User)
+                .WithMany()
+                .HasForeignKey(g => g.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }

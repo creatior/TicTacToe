@@ -11,10 +11,8 @@ namespace TicTacToe
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -32,7 +30,13 @@ namespace TicTacToe
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            // auto migrations
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<TicTacToeDbContext>();
+                dbContext.Database.Migrate();
+            }
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -40,7 +44,6 @@ namespace TicTacToe
             }
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

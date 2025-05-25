@@ -16,6 +16,12 @@ namespace TicTacToe.DataAccess.Configurations
             builder.Property(x => x.Difficulty)
                 .HasMaxLength(4)
                 .IsRequired();
+
+            builder.Property(x => x.Date)
+           .HasConversion(
+               v => v.ToUniversalTime(),
+               v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
+           );
         }
     }
 }
