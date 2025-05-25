@@ -52,7 +52,8 @@ const GamePage = () => {
     setIsLocked(true);
 
     try {
-      const {board: updatedBoard, status} = await move(board, difficulty);
+      console.log(await move(newBoard, difficulty))
+      const {newBoard: updatedBoard, status: status} = await move(newBoard, difficulty);
       
       setBoard(updatedBoard);
       setGameStatus(status || null);

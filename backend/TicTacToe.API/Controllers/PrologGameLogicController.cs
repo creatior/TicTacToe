@@ -29,7 +29,7 @@ namespace TicTacToe.API.Controllers
                 return BadRequest("Difficulty must be between 1 and 4");
 
             // Полный путь к файлу main.pl
-            var prologFilePath = @"C:\Users\pasha\Desktop\jook_project\backend\Prolog\main.pl";
+            var prologFilePath = @"C:\Users\admin\Desktop\Lab\tictactoe\backend\Prolog\main.pl";
             
             if (!System.IO.File.Exists(prologFilePath))
             {
