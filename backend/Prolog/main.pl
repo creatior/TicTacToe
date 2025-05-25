@@ -7,16 +7,16 @@
 %--------------------------------------------------
 % 1) entry_point_primitive(+Board)
 % "Глупый" бот без блокировки: выигрыша нет -> случайный ход
-entry_point_primitive(Board) :-
+entry_point_primitive(Board, ResultBoard) :-
     Player = 2,
     ( find_winning_move(Board, Player, NewBoard) -> true
     ; random_move(Board, Player, NewBoard)
     ),
-    write(NewBoard), nl, !.
+    ResultBoard = NewBoard, !.
 
 % 2) entry_point_easy(+Board)
 % Как primitive, но с проверкой на блокировку победы оппонента
-entry_point_easy(Board) :-
+entry_point_easy(Board, ResultBoard) :-
     Player = 2,
     ( find_winning_move(Board, Player, NewBoard) -> true
     ; Opponent = 1,
@@ -25,11 +25,11 @@ entry_point_easy(Board) :-
       ; random_move(Board, Player, NewBoard)
       )
     ),
-    write(NewBoard), nl, !.
+    ResultBoard = NewBoard,!.
 
 % 3) entry_point_medium(+Board)
 % Как hard, но без приоритета углов: если нет выигрыша, нет угрозы, и центры заняты -> случайный ход
-entry_point_medium(Board) :-
+entry_point_medium(Board, ResultBoard) :-
     Player = 2,
     ( find_winning_move(Board, Player, NewBoard) -> true
     ; Opponent = 1,
@@ -42,13 +42,13 @@ entry_point_medium(Board) :-
         )
       )
     ),
-    write(NewBoard), nl, !.
+    ResultBoard = NewBoard, !.
 
 % 4) entry_point_hard(+Board)
 % Полная логика: выигрыш -> блокировка -> центр -> угол -> любой
-entry_point_hard(Board) :-
+entry_point_hard(Board, ResultBoard) :-
     next_move(Board, NewBoard),
-    write(NewBoard), nl, !.
+    ResultBoard = NewBoard,!.
 
 %--------------------------------------------------
 % next_move(+Board, -NewBoard)
@@ -141,3 +141,9 @@ winning_lines([
 center_positions([6,7,10,11]).
 corner_positions([1,4,13,16]).
 
+% is_draw(+Board)
+% Проверяет, является ли текущее состояние доски ничьей (все клетки заполнены и нет победителя)
+is_draw(Board) :-
+    \+ member(0, Board),       % Нет пустых клеток
+    \+ winner(Board, 1),       % Нет победителя крестиков
+    \+ winner(Board, 2).       % Нет победителя ноликов
