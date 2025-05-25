@@ -10,10 +10,20 @@ namespace TicTacToe.Application.Services
         {
             _usersRepository = usersRepository;
         }
-
         public async Task<Guid> CreateUser(User user)
         {
             return await _usersRepository.Create(user);
+        }
+        public async Task<Guid?> Authenticate(string username, string password)
+        {
+            var user = await _usersRepository.GetByUsername(username);
+
+            if (user == null || !user.VerifyPassword(password))
+            {
+                return null;
+            }
+
+            return user.Id;
         }
     }
 }
