@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TicTacToe.DataAccess;
@@ -11,9 +12,11 @@ using TicTacToe.DataAccess;
 namespace TicTacToe.DataAccess.Migrations
 {
     [DbContext(typeof(TicTacToeDbContext))]
-    partial class TicTacToeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250525162430_GameModelv1")]
+    partial class GameModelv1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,19 +34,20 @@ namespace TicTacToe.DataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long?>("Difficulty")
+                    b.Property<long>("Difficulty")
                         .HasColumnType("bigint");
 
-                    b.Property<bool?>("Finished")
+                    b.Property<bool>("Finished")
                         .HasColumnType("boolean");
 
-                    b.Property<long?>("Result")
+                    b.Property<long>("Result")
                         .HasColumnType("bigint");
 
                     b.Property<string>("State")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -77,7 +81,8 @@ namespace TicTacToe.DataAccess.Migrations
                     b.HasOne("TicTacToe.DataAccess.Entities.UserEntity", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });

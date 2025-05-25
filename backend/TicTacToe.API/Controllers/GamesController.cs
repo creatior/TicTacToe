@@ -38,7 +38,14 @@ namespace TicTacToe.API.Controllers
         [HttpPatch("{id:guid}")]
         public async Task<ActionResult<Guid>> UpdateGame(Guid id, [FromBody] GamesRequest request)
         {
-            var gameStateId = await _gameService.UpdateGame(id, request.State, request.Difficulty);
+            var gameStateId = await _gameService.UpdateGame(
+                id,
+                request.State,
+                request.Difficulty,
+                request.Finished,
+                request.UserId,
+                request.Result
+            );
 
             return Ok(gameStateId);
         }
