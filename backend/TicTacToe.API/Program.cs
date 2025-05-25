@@ -16,6 +16,17 @@ namespace TicTacToe
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowLocalhost3000",
+                    policy =>
+                    {
+                        policy.WithOrigins("http://localhost:3000")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
+
             builder.Services.AddDbContext<TicTacToeDbContext>(
                 options =>
                 {
@@ -42,6 +53,8 @@ namespace TicTacToe
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseCors("AllowLocalhost3000");
 
             app.UseAuthorization();
 
