@@ -109,10 +109,10 @@ const GamePage = () => {
               <Dropdown onSelect={(e) => setDifficulty(e)}>
                 <Dropdown.Toggle variant="secondary" style={{ width: '100%' }}>{difficulty}</Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item eventKey="Primate">Primate</Dropdown.Item>
-                  <Dropdown.Item eventKey="Easy">Easy</Dropdown.Item>
-                  <Dropdown.Item eventKey="Medium">Medium</Dropdown.Item>
-                  <Dropdown.Item eventKey="Hard">Hard</Dropdown.Item>
+                  <Dropdown.Item eventKey="1">Primate</Dropdown.Item>
+                  <Dropdown.Item eventKey="2">Easy</Dropdown.Item>
+                  <Dropdown.Item eventKey="3">Medium</Dropdown.Item>
+                  <Dropdown.Item eventKey="4">Hard</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </div>
