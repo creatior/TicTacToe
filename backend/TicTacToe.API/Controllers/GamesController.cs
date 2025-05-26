@@ -68,5 +68,40 @@ namespace TicTacToe.API.Controllers
 
             return Ok(gameStateId);
         }
+
+        [HttpGet("unfinished/{userId:guid}")]
+        public async Task<ActionResult<GamesResponse>> GetUnfinishedGameByUser(Guid userId)
+        {
+            // Получаем первую незавершенную игру пользователя
+            var game = await _gameService.GetUnfinishedGameByUser(userId);
+
+            if (game == null)
+            {
+                return NotFound();
+            }
+
+            var response = new GamesResponse(
+                Id: game.Id,
+                State: game.State,
+                Difficulty: game.Difficulty
+            );
+
+            return Ok(response);
+        }
+
+        [HttpGet("recent-finished/{userId:guid}")]
+        public async Task<ActionResult<IEnumerable<GamesResponse>>> GetRecentFinishedGames(Guid userId)
+        {
+            // Получаем 10 последних завершенных игр пользователя
+            var games = await _gameService.GetRecentFinishedGames(userId, 10);
+
+            var response = games.Select(game => new GamesResponse(
+                Id: game.Id,
+                State: game.State,
+                Difficulty: game.Difficulty
+            ));
+
+            return Ok(response);
+        }
     }
 }   

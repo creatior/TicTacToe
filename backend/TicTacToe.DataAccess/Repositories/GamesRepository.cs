@@ -62,5 +62,44 @@ namespace TicTacToe.DataAccess.Repositories
 
             return id;
         }
+
+        public async Task<Game?> GetUnfinishedByUser(Guid userId)
+        {
+            var gameEntity = await _context.Games
+                .AsNoTracking()
+                .Where(g => g.UserId == userId && g.Finished == false)
+                .OrderByDescending(g => g.Date)
+                .FirstOrDefaultAsync();
+
+            if (gameEntity == null)
+            {
+                return null;
+            }
+
+            var (game, error) = Game.Create(gameEntity.Id, gameEntity.State, gameEntity.Difficulty, gameEntity.UserId);
+            return string.IsNullOrEmpty(error) ? game : null;
+        }
+
+        public async Task<IEnumerable<Game>> GetRecentFinished(Guid userId, int count)
+        {
+            var gameEntities = await _context.Games
+                .AsNoTracking()
+                .Where(g => g.UserId == userId && g.Finished == true)
+                .OrderByDescending(g => g.Date)
+                .Take(count)
+                .ToListAsync();
+
+            var games = new List<Game>();
+            foreach (var gameEntity in gameEntities)
+            {
+                var (game, error) = Game.Create(gameEntity.Id, gameEntity.State, gameEntity.Difficulty, gameEntity.UserId);
+                if (string.IsNullOrEmpty(error))
+                {
+                    games.Add(game);
+                }
+            }
+
+            return games;
+        }
     }
 }

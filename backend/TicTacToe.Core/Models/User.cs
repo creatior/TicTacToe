@@ -1,4 +1,5 @@
 ﻿using BCrypt.Net;
+using System.Text;
 
 namespace TicTacToe.Core.Models
 {
@@ -32,32 +33,13 @@ namespace TicTacToe.Core.Models
                 error = "Password cannot be empty";
             }
 
-            string passwordHash = BCrypt.Net.BCrypt.HashPassword(password);
-
-            var user = new User(id, username, passwordHash);
-
+            var user = new User(id, username, password);
             return (user, error);
         }
 
         public bool VerifyPassword(string inputPassword)
         {
-            Console.WriteLine("=== DEBUG VERIFY ===");
-            Console.WriteLine($"Input password: '{inputPassword}'");
-            Console.WriteLine($"Stored hash: '{Password}'");
-            Console.WriteLine($"Hash length: {Password?.Length}");
-            Console.WriteLine($"Is null: {Password == null}");
-
-            try
-            {
-                bool result = BCrypt.Net.BCrypt.Verify(inputPassword.Trim(), Password);
-                Console.WriteLine($"Verify result: {result}");
-                return result;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Verify ERROR: {ex.Message}");
-                return false;
-            }
+            return inputPassword == Password;
         }
 
     }

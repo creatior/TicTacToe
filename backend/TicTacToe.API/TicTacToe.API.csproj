@@ -18,7 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\TicTacToe.Application\TicTacToe.Application.csproj" />
     <ProjectReference Include="..\TicTacToe.DataAccess\TicTacToe.DataAccess.csproj" />
-    <ProjectReference Include="..\TicTacToe.DataAccess.Fs\TicTacToe.DataAccess.Fs.fsproj" />
     <ProjectReference Include="..\TicTacToe.Functional\TicTacToe.Functional.fsproj" />
   </ItemGroup>
 

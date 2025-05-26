@@ -6,5 +6,6 @@ namespace TicTacToe.DataAccess.Repositories
     {
         Task<Guid> Create(User user);
         Task<User?> GetByUsername(string username);
+
     }
 }
