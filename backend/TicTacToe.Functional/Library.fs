@@ -88,21 +88,19 @@ module StatsQueries =
                 diff, 0, 0, 0
         )
     
-
-    /// Статистика по последним 10 играм пользователя:
-    /// (totalGames, wins, losses, draws, winPercentage)
+        /// Статистика по последним 10 играм пользователя:
     let getRecentStats (context: TicTacToeDbContext) (userId: Guid) : int * int * int * int * float =
-        // Берём игры пользователя с результатом
+        // Берём завершённые игры пользователя с результатом
         let recentGames =
             context.Set<GameEntity>()
-            |> Seq.filter (fun g -> Option.ofNullable g.UserId = Some userId)
+            |> Seq.filter (fun g -> Option.ofNullable g.UserId = Some userId && Option.ofNullable g.Finished = Some true)
             |> Seq.choose (fun g ->
                 match Option.ofNullable g.Result with
                 | Some r -> Some (g.Date, r)
                 | None -> None)
-            |> Seq.sortByDescending fst   
-            |> Seq.map snd                  
-            |> Seq.truncate 10              
+            |> Seq.sortByDescending fst   // самые свежие игры первыми
+            |> Seq.map snd                 // оставляем только результаты
+            |> Seq.truncate 10             // берём не более 10
             |> Seq.toList
 
         let total     = List.length recentGames
