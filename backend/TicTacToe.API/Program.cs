@@ -10,6 +10,7 @@ namespace TicTacToe
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.WebHost.UseUrls("http://+:5000");
 
             builder.Services.AddControllers();
 
@@ -44,8 +45,8 @@ namespace TicTacToe
             // auto migrations
             using (var scope = app.Services.CreateScope())
             {
-                var dbContext = scope.ServiceProvider.GetRequiredService<TicTacToeDbContext>();
-                dbContext.Database.Migrate();
+                 var dbContext = scope.ServiceProvider.GetRequiredService<TicTacToeDbContext>();
+                 dbContext.Database.Migrate();
             }
 
             if (app.Environment.IsDevelopment())

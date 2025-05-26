@@ -29,7 +29,7 @@ namespace TicTacToe.API.Controllers
                 return BadRequest("Difficulty must be between 1 and 4");
 
             // Полный путь к файлу main.pl
-            var prologFilePath = @"C:\Users\pasha\Desktop\jook_project\backend\Prolog\main.pl";
+            var prologFilePath = Path.Combine(AppContext.BaseDirectory, "Prolog", "main.pl");
             
             if (!System.IO.File.Exists(prologFilePath))
             {
@@ -76,7 +76,8 @@ namespace TicTacToe.API.Controllers
                 {
                     @"C:\Program Files\swipl\bin\swipl.exe",
                     @"C:\Program Files (x86)\swipl\bin\swipl.exe",
-                    @"C:\swipl\bin\swipl.exe"
+                    @"C:\swipl\bin\swipl.exe",
+		    @"swipl",
                 };
 
                 var swiPath = swiPaths.FirstOrDefault(System.IO.File.Exists) ?? "swipl";

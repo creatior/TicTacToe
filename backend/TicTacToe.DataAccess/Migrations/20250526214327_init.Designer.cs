@@ -12,8 +12,8 @@ using TicTacToe.DataAccess;
 namespace TicTacToe.DataAccess.Migrations
 {
     [DbContext(typeof(TicTacToeDbContext))]
-    [Migration("20250525155535_changeToGame")]
-    partial class changeToGame
+    [Migration("20250526214327_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,14 +34,19 @@ namespace TicTacToe.DataAccess.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long>("Difficulty")
+                    b.Property<long?>("Difficulty")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool?>("Finished")
+                        .HasColumnType("boolean");
+
+                    b.Property<long?>("Result")
                         .HasColumnType("bigint");
 
                     b.Property<string>("State")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -75,8 +80,7 @@ namespace TicTacToe.DataAccess.Migrations
                     b.HasOne("TicTacToe.DataAccess.Entities.UserEntity", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("User");
                 });

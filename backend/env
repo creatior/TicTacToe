@@ -1,0 +1,7 @@
+POSTGRES_HOST=db
+POSTGRES_PORT=5432
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=123
+POSTGRES_DB=tictactoedb
+JWT_SECRET=your_jwt_access_secret_key_256_bit
+FRONTEND_URL=http://localhost:5173
