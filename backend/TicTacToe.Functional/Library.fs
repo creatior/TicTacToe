@@ -87,3 +87,28 @@ module StatsQueries =
             | None ->
                 diff, 0, 0, 0
         )
+    
+
+    /// Статистика по последним 10 играм пользователя:
+    /// (totalGames, wins, losses, draws, winPercentage)
+    let getRecentStats (context: TicTacToeDbContext) (userId: Guid) : int * int * int * int * float =
+        // Берём игры пользователя с результатом
+        let recentGames =
+            context.Set<GameEntity>()
+            |> Seq.filter (fun g -> Option.ofNullable g.UserId = Some userId)
+            |> Seq.choose (fun g ->
+                match Option.ofNullable g.Result with
+                | Some r -> Some (g.Date, r)
+                | None -> None)
+            |> Seq.sortByDescending fst   
+            |> Seq.map snd                  
+            |> Seq.truncate 10              
+            |> Seq.toList
+
+        let total     = List.length recentGames
+        let wins      = recentGames |> List.filter ((=) 1u) |> List.length
+        let losses    = recentGames |> List.filter ((=) 2u) |> List.length
+        let draws     = recentGames |> List.filter ((=) 3u) |> List.length
+        let winPctRaw = if total = 0 then 0.0 else float wins / float total * 100.0
+        let winPct    = System.Math.Round(winPctRaw, 3)
+        (total, wins, losses, draws, winPct)
