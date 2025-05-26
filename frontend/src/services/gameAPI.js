@@ -15,5 +15,7 @@ export const move = async(board, difficulty) => {
   return data
 }
 
-export const fetchStats = async () => {
+export const fetchUnfinished = async(userId) => {
+  const {data} = await $host.get('Games/unfinished/' + userId)
+  return data
 }
