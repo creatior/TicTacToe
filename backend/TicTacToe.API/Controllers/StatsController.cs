@@ -48,7 +48,7 @@ namespace TicTacToe.API.Controllers
             var streak = StatsQueries.getMaxWinStreak(_context, userId);
             return Ok(new { MaxWinStreak = streak });
         }
-        
+
 
         // GET api/stats/user/{userId}/difficulty
         [HttpGet("user/{userId}/difficulty")]
@@ -64,6 +64,21 @@ namespace TicTacToe.API.Controllers
                         });
 
             return Ok(stats);
+        }
+        
+        // GET api/stats/user/{userId}/recent
+        [HttpGet("user/{userId}/recent")]
+        public IActionResult GetRecentStats(Guid userId)
+        {
+            var (total, wins, losses, draws, winPct) = StatsQueries.getRecentStats(_context, userId);
+            return Ok(new
+            {
+                TotalGames    = total,
+                Wins          = wins,
+                Losses        = losses,
+                Draws         = draws,
+                WinPercentage = winPct
+            });
         }
 
     }
